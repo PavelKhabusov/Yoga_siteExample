@@ -175,7 +175,7 @@
 					</div>
 					<form id="form">
 						<input required type="email" placeholder="Ваша почта">
-						<input required type="tel" placeholder="Ваш телефон">
+						<input id="tel_mask" required type="tel" placeholder="Ваш телефон">
 						<button type="submit">Отправить</button>
 					</form>
 				</div>
@@ -222,7 +222,7 @@
 								<label class="popup-form__label" for="phone">
 								Введите ваш номер телефона:
 								</label>
-								<input class="popup-form__input" name="phone" type="tel" required placeholder="+7(978) 973 33 45">
+								<input id="popup_tel_mask" class="popup-form__input" name="phone" type="tel" required placeholder="+7(978) 973 33 45">
 								<button class="button popup-form__btn">
 									Оставить заявку!
 								</button>
@@ -230,6 +230,7 @@
 					</div>
 	 		</div>
 	</div>
+	<script src="js/new.js"></script>
 	<script src="js/script.js"></script>
 </body>
 </html>
