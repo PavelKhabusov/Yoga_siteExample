@@ -129,44 +129,56 @@ window.addEventListener('DOMContentLoaded', function() {
 		success: 'Спасибо! Скоро мы с вами свяжемся!',
 		failure: 'Что-то пошло не так...' 
 	};
-	let popupForm = document.querySelector('.main-form'),
-			popupInput = popupForm.getElementsByTagName('input'),
-			popupStatusMessage = document.createElement('div');
-	popupStatusMessage.classList.add('status');
+	let form = document.getElementsByClassName('main-form')[0],
+			formBottom = document.getElementById('form'),
+			input = document.getElementById('form'),
+			statusMessage = document.createElement('div');
+			statusMessage.classList.add('status');
+	function sendForm(elem) {
+		elem.addEventListener('submit', function(e) {
+			e.preventDefault();
+			elem.appendChild(statusMessage);
+			let formData = new FormData(elem);
 
-	popupForm.addEventListener('submit', function(e) {
-		e.preventDefault();
-		popupForm.appendChild(popupStatusMessage);
+			function postData(data) {
+				return new Promise(function(resolve, reject) {
+					let request = new XMLHttpRequest();
+					request.open('POST', 'server.php');
+					request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
-		let request = new XMLHttpRequest();
-		request.open('POST', 'server.php');
-		request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-
-		let popupFormData = new FormData(popupForm);
-
-		let obj = {};
-		popupFormData.forEach(function(value, key) {
-			obj[key] = value;
-		});
-		let popupJson = JSON.stringify(obj);
-
-		request.send(popupJson);
-
-		request.addEventListener('readystatechange', function() {
-			if(request.readyState < 4) {
-				popupStatusMessage.innerHTML = message.loading;
-			} else if(request.readyState === 4 && request.status == 200) {
-				popupStatusMessage.innerHTML = message.success;
-			} else {
-				popupStatusMessage.innerHTML = message.failure;
+					request.onreadystatechange = function() {
+						if(request.readyState < 4) {
+							resolve()
+						} else if(request.readyState === 4) {
+							if(request.status == 200)
+								resolve()
+							} else {
+								reject()
+							}
+					}
+					
+					request.send(data);
+				})
 			}
+			function clearInput() {
+				for(let i = 0; i < input.length; i++) {
+					input[i].value = '';
+				}
+			}
+			postData(formData)
+				.then(() => statusMessage.innerHTML = message.loading)
+				.then(() => {
+					thanksModal.style.display = 'block';
+					mainModal.style.display = 'none';
+					statusMessage.innerHTML = '';
+				})
+				.catch(() => statusMessage.innerHTML = message.failure)
+				.then(clearInput)
 		});
-
-		for(let i = 0; i < popupInput.length; i++) {
-			popupInput[i].value = '';
-		}
-	});
-	// Next form
+	}
+	sendForm(form);
+	sendForm(formBottom);
+	
 	let tel_mask = document.getElementById("tel_mask"),
 			popup_tel_mask = document.getElementById("popup_tel_mask");
 	tel_mask.addEventListener('keypress', function() {
@@ -183,44 +195,6 @@ window.addEventListener('DOMContentLoaded', function() {
         that.value = that.value.replace(res, '');
     }, 0);
   }, false);
-
-	let form = document.querySelector('#form'),
-			input = form.getElementsByTagName('input'),
-			statusMessage = document.createElement('div');
-	statusMessage.classList.add('status');
-
-	form.addEventListener('submit', function(e) {
-		e.preventDefault();
-		form.appendChild(statusMessage);
-
-		let request = new XMLHttpRequest();
-		request.open('POST', 'server.php');
-		request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-
-		let formData = new FormData(form);
-
-		let obj = {};
-		formData.forEach(function(value, key) {
-			obj[key] = value;
-		});
-		let json = JSON.stringify(obj);
-
-		request.send(json);
-
-		request.addEventListener('readystatechange', function() {
-			if(request.readyState < 4) {
-				statusMessage.innerHTML = message.loading;
-			} else if(request.readyState === 4 && request.status == 200) {
-				statusMessage.innerHTML = message.success;
-			} else {
-				statusMessage.innerHTML = message.failure;
-			}
-		});
-
-		for(let i = 0; i < input.length; i++) {
-			input[i].value = '';
-		}
-	});
 
 	// ----------
 	// ----- Form
