@@ -1,4 +1,5 @@
 function slider() {
+	'use strict';
   // ------------
 	// ----- Slider
 	// ------------
@@ -47,4 +48,4 @@ function slider() {
 		}
 	});
 }
-module.exports = slider;
+export default slider;

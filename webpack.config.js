@@ -1,12 +1,12 @@
 'use strict';
 
 let path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 
 module.exports = {
   mode: 'development',
-  entry: './src/js/script.js',
+  entry: ['./src/js/index.js'],
   output: {
     filename: 'bundle.js',
     path: __dirname + '/dist/js'
@@ -19,7 +19,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules|[node_modules/core.js]/,
+        exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader?optional[]=runtime',
           options: {
@@ -40,7 +40,4 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new UglifyJsPlugin()
-  ]
 };

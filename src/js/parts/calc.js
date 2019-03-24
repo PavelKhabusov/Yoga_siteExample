@@ -1,4 +1,5 @@
 function calc() {
+	'use strict';
   // ----------------
 	// ----- Calculator
 	// ----------------
@@ -50,4 +51,4 @@ function calc() {
 		}
 	});
 }
-module.exports = calc;
+export default calc;

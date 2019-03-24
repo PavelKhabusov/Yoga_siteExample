@@ -1,4 +1,5 @@
 function modal() {
+  'use strict';
   // -----------
 	// ----- Modal
 	// -----------
@@ -22,4 +23,4 @@ function modal() {
     document.body.style.overflow = '';
   });
 }
-module.exports = modal;
+export default modal;

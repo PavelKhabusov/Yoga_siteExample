@@ -1,4 +1,5 @@
 function form() {
+	'use strict';
   // ----------
 	// ----- Form
 	// ----------
@@ -45,11 +46,7 @@ function form() {
 			}
 			postData(formData)
 				.then(() => statusMessage.innerHTML = message.loading)
-				.then(() => {
-					thanksModal.style.display = 'block';
-					mainModal.style.display = 'none';
-					statusMessage.innerHTML = '';
-				})
+				.then(() => statusMessage.innerHTML = message.success)
 				.catch(() => statusMessage.innerHTML = message.failure)
 				.then(clearInput)
 		});
@@ -74,4 +71,4 @@ function form() {
     }, 0);
   }, false);
 }
-module.exports = form;
+export default form;
