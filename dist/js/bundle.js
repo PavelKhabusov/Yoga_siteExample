@@ -2025,7 +2025,7 @@ function calc() {
   totalValue.innerHTML = 0;
   persons.addEventListener('change', function () {
     personsSum = +this.value;
-    total = (daysSum + personsSum) * 4000 * placeValue;
+    total = daysSum * personsSum * 4000 * placeValue;
 
     if (restDays.value == '' || persons.value == '') {
       totalValue.innerHTML = 0;
@@ -2043,7 +2043,7 @@ function calc() {
   });
   restDays.addEventListener('change', function () {
     daysSum = +this.value;
-    total = (daysSum + personsSum) * 4000 * placeValue;
+    total = daysSum * personsSum * 4000 * placeValue;
 
     if (restDays.value == '' || persons.value == '') {
       totalValue.innerHTML = 0;
@@ -2065,7 +2065,7 @@ function calc() {
     if (restDays.value == '' || persons.value == '') {
       totalValue.innerHTML = 0;
     } else {
-      var a = (daysSum + personsSum) * 4000 * placeValue;
+      var a = daysSum * personsSum * 4000 * placeValue;
       totalValue.innerHTML = a;
     }
   });
@@ -2106,7 +2106,7 @@ function form() {
   };
   var form = document.getElementsByClassName('main-form')[0],
       formBottom = document.getElementById('form'),
-      input = document.getElementById('form'),
+      input = document.querySelectorAll('form input'),
       statusMessage = document.createElement('div');
   statusMessage.classList.add('status');
 
